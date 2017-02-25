@@ -1,5 +1,7 @@
 # brightspace-auth-keys
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Brightspace/node-auth-keys.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/Brightspace/node-auth-keys.svg?branch=master)](https://travis-ci.org/Brightspace/node-auth-keys)
 
 Library for generating, storing, and retrieving keypairs for use in
