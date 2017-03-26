@@ -10,7 +10,8 @@
   "scripts": {
     "check-style": "eslint .",
     "pretest": "npm run check-style",
-    "test": "istanbul cover -R _mocha -- --recursive ./test"
+    "test": "istanbul cover -R _mocha -- --recursive ./test",
+    "test-nocov": "mocha --recursive ./test"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
