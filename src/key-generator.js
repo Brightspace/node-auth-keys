@@ -60,6 +60,14 @@ function parseOpts(opts) {
 		this._signingKeyOverlap = overlap;
 	}
 
+	if (typeof opts.disableAutoRotate !== 'undefined') {
+		if (typeof opts.disableAutoRotate !== 'boolean') {
+			throw new TypeError(`"opts.disableAutoRotate" should be a boolean. Got "${opts.disableAutoRotate}" (${typeof opts.disableAutoRotate}).`);
+		}
+
+		this._disableAutoRotate = opts.disableAutoRotate;
+	}
+
 	switch (opts.signingKeyType) {
 		case SIGNING_KEY_TYPE_RSA: {
 			this.keygen = rsaKeygen.bind(null, rsaKeygen.normalize(opts.rsa));
@@ -82,15 +90,17 @@ function KeyGenerator(opts) {
 	this._publicKeyStore = null;
 	this._keyGenerationTask = null;
 	this._currentPrivateKey = null;
-	this._generateNewKeys = this._generateNewKeys.bind(this);
+	this.generateNewKeys = this.generateNewKeys.bind(this);
 
 	parseOpts.call(this, opts);
 
-	this._generateNewKeys();
-	setInterval(this._generateNewKeys, this._signingKeyAge * 1000);
+	if (this._disableAutoRotate !== true) {
+		this.generateNewKeys();
+		setInterval(this.generateNewKeys, this._signingKeyAge * 1000);
+	}
 }
 
-KeyGenerator.prototype._generateNewKeys = function _generateNewKeys() {
+KeyGenerator.prototype.generateNewKeys = function generateNewKeys() {
 	this._keyGenerationTask = this
 		.keygen(uuid())
 		.then(key => {
@@ -107,7 +117,7 @@ KeyGenerator.prototype._generateNewKeys = function _generateNewKeys() {
 		})
 		.catch(() => {
 			return new Promise(resolve => setTimeout(resolve, 100).unref())
-				.then(this._generateNewKeys);
+				.then(this.generateNewKeys);
 		});
 
 	return this._keyGenerationTask;

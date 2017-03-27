@@ -113,6 +113,15 @@ const keyGenerator = new KeyGenerator({
 });
 ```
 
+#### Disabling auto-rotate
+
+If the module is used in a stateless context (such as, an AWS Lambda that cannot
+reliably hold the state in memory), default auto-rotation behaviour can be
+disabled by setting the option `disableAutoRotate: true`. In this case, the
+consumer is responsible for calling `generateNewKeys()` every `signingKeyAge`
+seconds and (if applicable) securely store the private key returned by the
+function.
+
 ## Contributing
 
 1. **Fork** the repository. Committing directly against this repository is

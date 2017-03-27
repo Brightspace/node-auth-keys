@@ -46,7 +46,7 @@ describe('KeyGenerator', () => {
 	}
 
 	describe('constructor(...)', () => {
-		beforeEach(() => sandbox.stub(KeyGenerator.prototype, '_generateNewKeys'));
+		beforeEach(() => sandbox.stub(KeyGenerator.prototype, 'generateNewKeys'));
 
 		it('should throw if options is not an object', () => {
 			for (const val of [undefined, 'hi!', function() {}, 1000]) {
@@ -145,6 +145,14 @@ describe('KeyGenerator', () => {
 			}
 		});
 
+		it('should throw if disableAutoRotate is not boolean', () => {
+			assert.throws(
+				() => createKeyGenerator({ disableAutoRotate: 'true' }),
+				Error,
+				/disableAutoRotate/
+			);
+		});
+
 		describe('RSA', /* @this */ function() {
 			this.timeout(5000);
 
@@ -165,24 +173,39 @@ describe('KeyGenerator', () => {
 			});
 		});
 
-		describe('should call _generateNewKeys', () => {
+		describe('should call generateNewKeys (default behaviour)', () => {
 			beforeEach(() => createKeyGenerator());
 
 			it('right away', () => {
-				assert.strictEqual(1, KeyGenerator.prototype._generateNewKeys.callCount);
+				assert.strictEqual(1, KeyGenerator.prototype.generateNewKeys.callCount);
 			});
 
 			it('every signingKeyAge seconds', () => {
 				clock.tick(TEST_SIGNING_KEY_AGE * 1000);
-				assert.strictEqual(1 + 1, KeyGenerator.prototype._generateNewKeys.callCount);
+				assert.strictEqual(1 + 1, KeyGenerator.prototype.generateNewKeys.callCount);
 
 				clock.tick(TEST_SIGNING_KEY_AGE * 1000 * 15);
-				assert.strictEqual(1 + 1 + 15, KeyGenerator.prototype._generateNewKeys.callCount);
+				assert.strictEqual(1 + 1 + 15, KeyGenerator.prototype.generateNewKeys.callCount);
+			});
+		});
+
+		describe('should never call generateNewKeys if auto-rotation is disabled', () => {
+			beforeEach(() => createKeyGenerator({
+				disableAutoRotate: true
+			}));
+
+			it('not right away', () => {
+				assert.strictEqual(0, KeyGenerator.prototype.generateNewKeys.callCount);
+			});
+
+			it('not every signingKeyAge seconds', () => {
+				clock.tick(TEST_SIGNING_KEY_AGE * 1000 * 15);
+				assert.strictEqual(0, KeyGenerator.prototype.generateNewKeys.callCount);
 			});
 		});
 	});
 
-	describe('_generateNewKeys(...)', () => {
+	describe('generateNewKeys(...)', () => {
 		beforeEach(() => sandbox.stub(dummyPublicKeyStore, 'storePublicKey').resolves());
 
 		describe('RSA', /* @this */ function() {
@@ -193,12 +216,12 @@ describe('KeyGenerator', () => {
 				clock.tick(CURRENT_TIME_MS);
 
 				const keygen = createKeyGenerator({ signingKeyType: 'RSA' });
-				// _generateNewKeys is called immediately by the contrusctor, so reset the stub
+				// generateNewKeys is called immediately by the contrusctor, so reset the stub
 				dummyPublicKeyStore.storePublicKey.resetHistory();
 				assert.strictEqual(0, dummyPublicKeyStore.storePublicKey.callCount);
 
 				return keygen
-					._generateNewKeys()
+					.generateNewKeys()
 					.then(
 						() => {
 							sinon.assert.calledWith(
@@ -224,12 +247,12 @@ describe('KeyGenerator', () => {
 				clock.tick(CURRENT_TIME_MS);
 
 				const keygen = createKeyGenerator({ signingKeyType: 'EC' });
-				// _generateNewKeys is called immediately by the contrusctor, so reset the stub
+				// generateNewKeys is called immediately by the contrusctor, so reset the stub
 				dummyPublicKeyStore.storePublicKey.resetHistory();
 				assert.strictEqual(0, dummyPublicKeyStore.storePublicKey.callCount);
 
 				return keygen
-					._generateNewKeys()
+					.generateNewKeys()
 					.then(
 						() => {
 							sinon.assert.calledWith(
@@ -256,7 +279,7 @@ describe('KeyGenerator', () => {
 				keygen._keyGenerationTask.then(() => {
 					keygen._keyGenerationTask = undefined;
 					keygen._currentPrivateKey = null;
-					keygen._generateNewKeys();
+					keygen.generateNewKeys();
 					done();
 				});
 			});
