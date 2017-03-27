@@ -120,7 +120,7 @@ reliably hold the state in memory), default auto-rotation behaviour can be
 disabled by setting the option `disableAutoRotate: true`. In this case, the
 consumer is responsible for calling `generateNewKeys()` every `signingKeyAge`
 seconds and (if applicable) securely store the private key returned by the
-function. See [Lambda Key Management](https://github.com/Brightspace/lambda-key-management).
+function.
 
 ## Contributing
 
