@@ -42,7 +42,7 @@
     "find-requires": "^0.2.3",
     "is-builtin-module": "^2.0.0",
     "jsonwebtoken": "^8.1.0",
-    "lcov-result-merger": "^2.0.0",
+    "lcov-result-merger": "^3.0.0",
     "mocha": "^5.0.0",
     "nock": "^9.1.6",
     "node-rsa": "^1.0.0",
