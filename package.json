@@ -26,7 +26,7 @@
     "jws": "^3.1.4",
     "native-crypto": "^1.7.2",
     "promised-method": "^1.0.0",
-    "superagent": "^3.8.2",
+    "superagent": "^4.0.0",
     "uuid": "^3.1.0",
     "xtend": "^4.0.1"
   },
