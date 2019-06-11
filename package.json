@@ -38,7 +38,7 @@
     "coveralls": "^3.0.0",
     "dynamodb-local": "0.0.26",
     "eslint": "^5.13.0",
-    "eslint-config-brightspace": "^0.5.0",
+    "eslint-config-brightspace": "^0.6.0",
     "find-requires": "^1.0.0",
     "is-builtin-module": "^3.0.0",
     "jsonwebtoken": "^8.1.0",
