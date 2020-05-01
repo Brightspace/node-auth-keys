@@ -21,7 +21,7 @@
     "test-all": "./bin/test-all.sh",
     "pretest": "npm run check-style",
     "test": "npm run check-deps && npm run test-all",
-    "report-cov": "lcov-result-merger 'coverage/**/lcov.info' | coveralls"
+    "report-cov": "nyc report --exclude-node-modules false --reporter text-lcov | coveralls"
   },
   "dependencies": {
     "@trust/keyto": "^0.3.5",
@@ -42,7 +42,6 @@
     "find-requires": "^1.0.0",
     "is-builtin-module": "^3.0.0",
     "jsonwebtoken": "^8.1.0",
-    "lcov-result-merger": "^3.1.0",
     "mocha": "^7.1.2",
     "nock": "^12.0.3",
     "nyc": "^15.0.1",
