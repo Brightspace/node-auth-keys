@@ -35,19 +35,19 @@
     "aws-sdk": "^2.179.0",
     "chai": "^4.1.1",
     "chai-as-promised": "^7.1.1",
-    "coveralls": "^3.0.0",
-    "dynamodb-local": "0.0.26",
-    "eslint": "^5.13.0",
+    "coveralls": "^3.1.0",
+    "dynamodb-local": "0.0.31",
+    "eslint": "^6.8.0",
     "eslint-config-brightspace": "^0.6.0",
     "find-requires": "^1.0.0",
     "is-builtin-module": "^3.0.0",
     "jsonwebtoken": "^8.1.0",
     "lcov-result-merger": "^3.1.0",
-    "mocha": "^6.0.0",
-    "nock": "^10.0.6",
-    "nyc": "^14.1.1",
+    "mocha": "^7.1.2",
+    "nock": "^12.0.3",
+    "nyc": "^15.0.1",
     "redis": "^2.8.0",
-    "sinon": "^7.2.3",
-    "source-map-support": "^0.5.3"
+    "sinon": "^9.0.2",
+    "source-map-support": "^0.5.19"
   }
 }
