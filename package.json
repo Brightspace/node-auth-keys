@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/Brightspace/node-auth#readme",
   "engines": {
-    "node": ">=10.12.0"
+    "node": ">=12.x"
   },
   "private": true,
   "scripts": {
