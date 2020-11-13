@@ -7,7 +7,7 @@ This repository is a collection of packages relating to Brightspace's OAuth2 fra
 
 ## Packages
 
-* [brightspace-auth-assertions](pacakges/node_modules/brightspace-auth-assertions)
+* [brightspace-auth-assertions](packages/node_modules/brightspace-auth-assertions)
 * [brightspace-auth-keys](packages/node_modules/brightspace-auth-keys)
 * [brightspace-auth-provisioning](packages/node_modules/brightspace-auth-provisioning)
 * [brightspace-auth-token](packages/node_modules/brightspace-auth-token)
